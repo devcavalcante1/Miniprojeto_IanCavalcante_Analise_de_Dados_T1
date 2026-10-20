@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relatório de Varejo — SENAI Carreira Tech</title>
+<style>
+:root{--bg:#f4f6fa;--card:#fff;--ink:#182230;--muted:#667085;--blue:#2557a7;--line:#e5eaf2;--warn:#fff4d6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Arial,Helvetica,sans-serif}
+header{background:#16345e;color:white;padding:28px max(20px,calc((100% - 1200px)/2))}
+header h1{margin:0 0 6px;font-size:27px}header p{margin:0;color:#dbe7f7}
+main{max-width:1200px;margin:22px auto;padding:0 18px}
+.filters,.kpis,.grid{display:grid;gap:14px}.filters{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:16px}
+.kpis{grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin-bottom:16px}
+.grid{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:0 2px 8px #172b4d0a}
+label{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}select{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:7px;background:white}
+.kpi .value{font-size:27px;font-weight:700;color:var(--blue)}.kpi .caption{font-size:12px;color:var(--muted)}
+h2{font-size:17px;margin:0 0 12px}svg{width:100%;height:auto;display:block}.note{background:var(--warn);border:1px solid #f0d88b;padding:14px;border-radius:10px;margin:16px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line)}th{color:var(--muted)}
+.small{font-size:12px;color:var(--muted)}.barrow{display:grid;grid-template-columns:minmax(95px,1fr) 2fr 65px;gap:9px;align-items:center;margin:10px 0;font-size:12px}.track{height:12px;background:#edf1f7;border-radius:8px;overflow:hidden}.bar{height:100%;background:var(--blue);border-radius:8px}
+footer{max-width:1200px;margin:18px auto;padding:0 18px 28px;color:var(--muted);font-size:12px}
+@media(max-width:480px){header h1{font-size:22px}.grid{grid-template-columns:1fr}}
+</style></head><body>
+<header><h1>Análise de Dados de Varejo</h1><p>SENAI Carreira Tech · Trilha Análise de Dados · Relatório acadêmico interativo</p></header>
+<main>
+<div class="filters card">
+<div><label for="categoria">Filtrar categoria</label><select id="categoria"><option value="Todas">Todas</option></select></div>
+<div><label for="visao">Visão do relatório</label><select id="visao"><option value="geral">Visão geral</option><option value="clientes">Perfil dos clientes</option><option value="qualidade">Qualidade dos dados</option></select></div>
+</div>
+<section class="kpis">
+<div class="card kpi"><div class="caption">Registros originais</div><div class="value">830.000</div><div class="caption">Base antes da limpeza</div></div>
+<div class="card kpi"><div class="caption">Clientes distintos</div><div class="value">1.000</div><div class="caption">Valores únicos de CL_ID</div></div>
+<div class="card kpi"><div class="caption">Produtos distintos</div><div class="value">229</div><div class="caption">Valores únicos de PR_ID</div></div>
+<div class="card kpi"><div class="caption">Duplicatas exatas</div><div class="value">96.553</div><div class="caption">11,63% dos registros originais</div></div>
+</section>
+<div id="geral" class="grid">
+<div class="card"><h2>Registros por categoria</h2><div id="categoriasChart"></div><p class="small">Valores absolutos; frequência de registros não equivale necessariamente a unidades vendidas.</p></div>
+<div class="card"><h2>Top 10 produtos por frequência</h2><div id="produtosChart"></div><p class="small">Chave exibida combina ID e nome; nomes repetidos podem corresponder a IDs diferentes.</p></div>
+<div class="card"><h2>Distribuição de CL_FHL</h2><div id="filhosChart"></div><p class="small">Distribuição calculada por registro, não por cliente único.</p></div>
+<div class="card"><h2>Registros por gênero</h2><div id="generoChart"></div><table><thead><tr><th>Gênero</th><th>Clientes distintos</th><th>Média CL_FHL por registro</th></tr></thead><tbody><tr><td>F</td><td>519</td><td>1,091</td></tr><tr><td>M</td><td>481</td><td>1,207</td></tr></tbody></table></div>
+</div>
+<div id="clientes" class="grid" style="display:none">
+<div class="card"><h2>Perfil de registros por gênero</h2><div id="generoChart2"></div><p>F: 519 clientes distintos; M: 481 clientes distintos. A média CL_FHL por registro é ponderada pelo número de linhas de cada cliente.</p></div>
+<div class="card"><h2>Quantidade de filhos informada (CL_FHL)</h2><div id="filhosChart2"></div><p class="small">Para conclusões demográficas, validar consistência do atributo por CL_ID e recalcular sobre clientes únicos.</p></div>
+</div>
+<div id="qualidade" style="display:none" class="grid">
+<div class="card"><h2>Qualidade e preparação dos dados</h2><table><tbody>
+<tr><th>Registros originais</th><td>830.000</td></tr><tr><th>Colunas originais</th><td>14</td></tr><tr><th>Colunas completamente vazias removidas</th><td>4</td></tr><tr><th>Datas inválidas após conversão</th><td>0</td></tr><tr><th>Nulos nas 10 colunas úteis após limpeza</th><td>0</td></tr><tr><th>Duplicatas exatas identificadas</th><td>96.553</td></tr><tr><th>Categoria #N/D</th><td>3.650</td></tr></tbody></table></div>
+<div class="card"><h2>Pendências de validação</h2><ul><li>Confirmar a chave única de negócio antes de excluir duplicatas.</li><li>Investigar a categoria #N/D.</li><li>Confirmar o significado de CO_ID e dos campos codificados.</li><li>Importar a base original para habilitar filtros por data, cliente e produto.</li><li>Não há preço/valor de venda na estrutura conhecida; não inferir faturamento.</li></ul></div>
+</div>
+<div class="note"><strong>Nota metodológica:</strong> este painel é uma prévia interativa construída apenas com resultados agregados já informados. Não é um arquivo PBIX nativo e não substitui a base original para análises detalhadas. As duplicatas são uma pendência de investigação, não prova automática de erro.</div>
+</main>
+<footer>Projeto acadêmico · Valores reproduzidos dos resultados conhecidos da análise Python/Pandas. Validar a base original antes de publicar conclusões.</footer>
+<script>
+const cats=[["ALIMENTOS",434767],["HIGIENE",155574],["LIMPEZA",145754],["BEBIDAS",43299],["PET",32399],["ACESSORIOS",14557],["#N/D",3650]];
+const products=[["93 · AGUA SANITARIA",3773],["98 · DESENGORDURANTE",3760],["37 · LEITE",3757],["61 · SARDINHA",3746],["129 · SARDINHA",3744],["190 · GEL",3736],["174 · LIMPADOR PERFUMADO",3730],["20 · CEBOLA",3730],["51 · PAPINHA INFANTIL",3726],["103 · LIMPADOR MULTIUSO",3723]];
+const filhos=[[0,435501],[1,102813],[2,106622],[3,104685],[4,80379]];
+const gender=[["F",432576],["M",397424]];
+const catSelect=document.getElementById("categoria");
+cats.forEach(([n])=>{let o=document.createElement("option");o.value=n;o.textContent=n;catSelect.appendChild(o)});
+function bars(id,data,filterAll=false){const el=document.getElementById(id);if(!el)return;el.innerHTML="";const max=Math.max(...data.map(x=>x[1]));data.forEach(([name,val])=>{let row=document.createElement("div");row.className="barrow";row.innerHTML=`<span>${name}</span><div class="track"><div class="bar" style="width:${val/max*100}%"></div></div><strong>${val.toLocaleString("pt-BR")}</strong>`;el.appendChild(row)})}
+function render(){const c=catSelect.value;const cdata=c==="Todas"?cats:cats.filter(x=>x[0]===c);bars("categoriasChart",cdata);bars("produtosChart",products);bars("filhosChart",filhos.map(x=>[x[0]+" filho(s)",x[1]]));bars("generoChart",gender);bars("filhosChart2",filhos.map(x=>[x[0]+" filho(s)",x[1]]));bars("generoChart2",gender)}
+document.getElementById("visao").addEventListener("change",e=>{const v=e.target.value;document.getElementById("geral").style.display=v==="geral"?"grid":"none";document.getElementById("clientes").style.display=v==="clientes"?"grid":"none";document.getElementById("qualidade").style.display=v==="qualidade"?"grid":"none"});
+catSelect.addEventListener("change",render);render();
+</script></body></html>

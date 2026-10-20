@@ -1,0 +1,32 @@
+-- Medidas DAX sugeridas para uma tabela detalhada chamada 'Varejo'.
+-- IMPORTANTE: estas medidas dependem da importação da base original Varejo.csv.
+-- Não são calculáveis de forma confiável a partir das tabelas agregadas deste pacote.
+
+Registros = COUNTROWS('Varejo')
+
+Clientes distintos = DISTINCTCOUNT('Varejo'[CL_ID])
+
+Produtos distintos = DISTINCTCOUNT('Varejo'[PR_ID])
+
+Compras/CO distintos = DISTINCTCOUNT('Varejo'[CO_ID])
+
+Registros duplicados estimados = 96553
+-- Valor fixo derivado da análise Python; atualizar após validar a regra de duplicidade.
+
+Percentual duplicados estimado =
+DIVIDE([Registros duplicados estimados], 830000, 0)
+
+Registros categoria sem classificação =
+CALCULATE(
+    [Registros],
+    'Varejo'[PR_CAT] = "#N/D"
+)
+
+Média filhos por cliente =
+AVERAGEX(
+    VALUES('Varejo'[CL_ID]),
+    CALCULATE(MAX('Varejo'[CL_FHL]))
+)
+
+-- Não criar medidas de faturamento, receita, ticket médio ou quantidade vendida:
+-- a base conhecida não possui preço, valor de venda nem quantidade comercial.

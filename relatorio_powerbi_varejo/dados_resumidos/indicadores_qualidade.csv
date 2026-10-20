@@ -1,0 +1,12 @@
+﻿Indicador,Valor,Observacao
+Registros originais,830000,Confirmado na execução do projeto
+Colunas originais,14,Confirmado na execução do projeto
+Colunas completamente vazias removidas,4,Unnamed: 10 a Unnamed: 13
+Registros com data inválida após conversão,0,Conversão com dayfirst=True e errors='coerce'
+Nulos nas 10 colunas úteis após limpeza,0,Conforme resultado informado
+Linhas duplicadas exatas detectadas,96553,Precisam de validação antes da exclusão
+Registros após drop_duplicates (simulação),733447,Resultado matemático; não assumir como base final sem regra de negócio
+Categorias #N/D,3650,Classificação pendente de investigação
+Clientes distintos (CL_ID),1000,Conforme nunique informado
+Produtos distintos (PR_ID),229,Conforme nunique informado
+CO_ID distintos,18471,Conforme nunique informado
