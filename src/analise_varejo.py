@@ -15,7 +15,7 @@ if not CAMINHO_CSV.exists():
         f"Arquivo não encontrado: {CAMINHO_CSV}"
     )
 
-# 4. Carrega a base de dados.
+# 4. Carrega a base de dados. Separando cada dado por ;
 df = pd.read_csv(
     CAMINHO_CSV,
     sep=";"
@@ -29,8 +29,8 @@ print("Etapa 1: iniciando leitura do CSV...", flush=True)
 print("\n=== ANÁLISE EXPLORATÓRIA DE DADOS ===")
 
 print("\n1. Dimensões da base:")
-print(f"Quantidade de registros: {df.shape[0]}")
-print(f"Quantidade de colunas: {df.shape[1]}")
+print(f"Quantidade de registros: {df.shape[0]}") #número de linhas
+print(f"Quantidade de colunas: {df.shape[1]}") #número de colunas
 
 print("\n2. Nomes das colunas:")
 print(df.columns.tolist())
@@ -39,16 +39,16 @@ print("\n3. Tipos de dados:")
 print(df.dtypes)
 
 print("\n4. Primeiras cinco linhas:")
-print(df.head())
+print(df.head()) # Um resumo do DATAFRAME descrevendo as 5 primeiro linhas
 
 print("\n5. Informações gerais:")
-df.info()
+df.info() #Informação dos dados, tipos, memória
 
 print("\n=== VERIFICAÇÃO DO CABEÇALHO ===")
 print(df.columns.tolist())
 
 print("\n=== VALORES NULOS POR COLUNA ===")
-print(df.isnull().sum())
+print(df.isnull().sum()) #início da limpeza dos dados, identificando as colunas com valores nulos
 
 print("\n=== AMOSTRA DOS DADOS ===")
 print(df.head(3).to_string())
@@ -58,7 +58,7 @@ print(df.head(3).to_string())
 # SPRINT 2 - LIMPEZA E DIAGNOSTICO DOS DADOS
 # ==================================================
 
-print("Etapa 2: leitura concluída.", flush=True)
+print("Etapa 2: leitura concluída.", flush=True) #flush ajuda na verificação do código em tempo real.
 # código de limpeza
 
 print("\n=== SPRINT 2: LIMPEZA DOS DADOS ===")
@@ -67,14 +67,14 @@ print("\n=== SPRINT 2: LIMPEZA DOS DADOS ===")
 print(f"Dimensoes originais: {df.shape}")
 
 # 2. Remover colunas totalmente vazias.
-colunas_vazias = df.columns[df.isna().all()].tolist()
+colunas_vazias = df.columns[df.isna().all()].tolist() #Identificação colunas vazias por meio da filtragem
 
 print("\nColunas totalmente vazias:")
 print(colunas_vazias)
 
-df = df.drop(columns=colunas_vazias)
+df = df.drop(columns=colunas_vazias) #Poderoso comando drop, utilizado para retirada de determinado dado.
 
-print(f"Dimensoes apos remover colunas vazias: {df.shape}")
+print(f"Dimensoes apos remover colunas vazias: {df.shape}") #Shape = linha x coluna
 
 # 3. Remover espacos desnecessarios dos textos.
 colunas_texto = df.select_dtypes(include="object").columns
@@ -87,7 +87,7 @@ for coluna in colunas_texto:
     df[coluna] = df[coluna].replace("", pd.NA)
 
 # 5. Converter DATA para datetime.
-df["DATA"] = pd.to_datetime(
+df["DATA"] = pd.to_datetime( #Formatação do data para datetime.
     df["DATA"],
     format="%d/%m/%Y",
     errors="coerce"
@@ -149,12 +149,26 @@ print(exemplos.to_string(index=False))
 
 print("\n=== SPRINT 4: INVESTIGACAO DOS DADOS ===", flush=True)
 
-# Quantidade de compras, clientes e produtos distintos
+# Quantidade de compras, clientes e produtos distintos   # o comando .nunnique() aponta apenas os valores distintos, desconsiderando os valores nulos.
 print("\nCompras distintas (CO_ID):", df["CO_ID"].nunique())
 print("Clientes distintos (CL_ID):", df["CL_ID"].nunique())
 print("Produtos distintos (PR_ID):", df["PR_ID"].nunique())
 
-# Quantidade de registros por cliente
+# Quantidade de registros por cliente # Vamos puxar 
+
+# .value_counts()
+
+# Conta quantas vezes cada cliente aparece.
+
+
+# .head(10)
+
+# Seleciona os 10 primeiros resultados, normalmente os mais frequentes.
+
+
+# .to_string()
+
+# Converte a série em texto para impressão.
 print("\nTop 10 clientes por quantidade de registros:")
 print(
     df["CL_ID"]
